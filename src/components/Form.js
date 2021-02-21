@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
-const Form = ({ addPerson }) => {
+import peopleContext from '../context/peopleContext';
+
+const Form = () => {
   const [person, setPerson] = useState({
     firstName: '',
     lastName: '',
   });
+  const context = useContext(peopleContext);
   const onChange = (event) => {
     setPerson({ ...person, [event.target.name]: event.target.value });
   };
@@ -17,7 +20,7 @@ const Form = ({ addPerson }) => {
       lastName: person.lastName.trim(),
     };
 
-    addPerson(newPerson);
+    context.addPerson(newPerson);
     setPerson({ firstName: "", lastName: "" });
   };
   return (

@@ -1,7 +1,9 @@
-import React,{useEffect} from 'react';
+import React,{useEffect, useContext} from 'react';
+import peopleContext from '../context/peopleContext';
 import PeopleCount from './PeopleCount';
-const NewPerson = ({newestPerson, peopleCount}) => {
-
+const NewPerson = () => {
+    const context = useContext(peopleContext);
+    const newestPerson = context.people[context.people.length -1];
     useEffect(() =>{
         const newestPersonName = `${newestPerson.firstName} ${newestPerson.lastName}`;
         document.title = newestPersonName;
@@ -9,7 +11,7 @@ const NewPerson = ({newestPerson, peopleCount}) => {
         return () => {
             console.log('Unmounted')
         }
-    }, [newestPerson]);
+    }, [context.newestPerson]);
 
     return(
         <div className="col col-sm-12">
@@ -17,7 +19,7 @@ const NewPerson = ({newestPerson, peopleCount}) => {
                  Newest Person: {`${newestPerson.firstName} ${newestPerson.lastName}`}
 
              </h2>
-             <PeopleCount peopleCount={`${peopleCount}`}/>
+             <PeopleCount/>
         </div>
 
     );
