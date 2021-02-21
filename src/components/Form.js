@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useMemo, useRef } from "react";
 
 import peopleContext from '../context/peopleContext';
 
@@ -8,6 +8,9 @@ const Form = () => {
     lastName: '',
   });
   const context = useContext(peopleContext);
+
+  const firstNameInput = useRef(null);
+
   const onChange = (event) => {
     setPerson({ ...person, [event.target.name]: event.target.value });
   };
@@ -22,7 +25,11 @@ const Form = () => {
 
     context.addPerson(newPerson);
     setPerson({ firstName: "", lastName: "" });
+    firstNameInput.current.focus();
   };
+
+  const printNumberOfPeople = () => console.log(`Number of people : ${context.people.length}`)
+//   useMemo(() => printNumberOfPeople(), [context.people]);
   return (
     <div className="col">
       <h2>Add a person: </h2>
@@ -35,6 +42,7 @@ const Form = () => {
             name="firstName"
             placeholder="First Name..."
             value={person.firstName}
+            ref = {firstNameInput}
             onChange={onChange}
           />
         </div>
